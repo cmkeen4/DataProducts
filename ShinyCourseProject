@@ -1,7 +1,5 @@
 ## ui.R code
-
 library(shiny)
-
 
 shinyUI(pageWithSidebar(
     
@@ -11,7 +9,7 @@ shinyUI(pageWithSidebar(
 
         
         selectInput('cyl', 'Number of Cylinders', c(4,6,8), selected=4),
-        selectInput('mpg', 'Miles Per Gallon', c("<20", "21-25", "26-30", ">30"),
+        selectInput('mpg', 'Miles Per Gallon', c("<20", "20-25", "25-30", ">30"),
                     selected="<20"),
         submitButton('Submit')
 
