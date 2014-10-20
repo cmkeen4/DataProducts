@@ -16,10 +16,14 @@ shinyUI(pageWithSidebar(
     ),
     
     mainPanel(
-        p('Cars by Cylinder'),
-        tableOutput('cyl'),
-        p('Cars by Miles per Gallon'),
-        tableOutput('mpg')
+        fluidRow (
+            column(6, h3('Cars by Cylinder'),
+                   tableOutput('cyl')
+                   ),
+            column(6, h3('Cars by Miles per Gallon'),
+                   tableOutput('mpg')
+                   )
+            )
     )
 ))
 
