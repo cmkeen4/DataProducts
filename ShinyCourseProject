@@ -35,9 +35,9 @@ cyl8 <- subset(mtcars, select=c(cyl,mpg,hp), subset=(cyl==8))
 dataset <- rbind(cyl4, cyl6, cyl8)
 
 mpgLT20 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg < 20))
-mpg2025 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg => 20 
+mpg2025 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg >= 20 
                                                                & mpg < 25))
-mpg2530 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg => 25 
+mpg2530 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg >= 25 
                                                                & mpg <= 30))
 mpgGT30 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg >= 30))
 
@@ -64,4 +64,3 @@ shinyServer(
         
     }
 )
-
