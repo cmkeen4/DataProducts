@@ -1,0 +1,67 @@
+## ui.R code
+
+library(shiny)
+
+
+shinyUI(pageWithSidebar(
+    
+    headerPanel("Car Search"),
+    
+    sidebarPanel(
+
+        
+        selectInput('cyl', 'Number of Cylinders', c(4,6,8), selected=4),
+        selectInput('mpg', 'Miles Per Gallon', c("<20", "21-25", "26-30", ">30"),
+                    selected="<20"),
+        submitButton('Submit')
+
+    ),
+    
+    mainPanel(
+        p('Cars by Cylinder'),
+        tableOutput('cyl'),
+        p('Cars by Miles per Gallon'),
+        tableOutput('mpg')
+    )
+))
+
+## server.R code
+library(shiny)
+
+data(mtcars)
+cyl4 <- subset(mtcars, select=c(cyl,mpg,hp), subset=(cyl==4))
+cyl6 <- subset(mtcars, select=c(cyl,mpg,hp), subset=(cyl==6))
+cyl8 <- subset(mtcars, select=c(cyl,mpg,hp), subset=(cyl==8))
+dataset <- rbind(cyl4, cyl6, cyl8)
+
+mpgLT20 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg < 20))
+mpg2025 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg => 20 
+                                                               & mpg < 25))
+mpg2530 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg => 25 
+                                                               & mpg <= 30))
+mpgGT30 <- subset(dataset, select=c(cyl, mpg, hp), subset=(mpg >= 30))
+
+shinyServer(
+    function(input, output) {
+        output$cyl<- renderTable({
+            if (input$cyl == 4) 
+                cyl4
+            else if (input$cyl == 6)
+                cyl6
+            else
+                cyl8
+            })
+        output$mpg <- renderTable({
+            if (input$mpg == "<20") 
+                mpgLT20
+            else if (input$mpg == "20-25")
+                mpg2025
+            else if (input$mpg == "25-30")
+                mpg2530
+            else
+                mpgGT30
+        })
+        
+    }
+)
+
